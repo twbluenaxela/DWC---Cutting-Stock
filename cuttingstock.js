@@ -1,24 +1,20 @@
 // Tip #1: it would be better if firstScreen and secondScreen were not arrays but were json objects instead.
-
+// Tip #2: The firstScreen and secondScreen array parameters would be better to be objects. You convert them to objects within the method but why not just send them as objects in the first place??
 
 //length of the aluminum bar
 const alumbarLength = 72;
 
-//some test arrays. ideally I would make these into different objects instead of arrays. or maybe i can make a seperate constructor that makes you an array and asks what
+//some test objects. maybe i can make a seperate constructor that makes you an object and asks what
 //lenght and width you want. 
-screenA = [44, 33];
-screenB = [55, 33.5];
-screenC = [22, 15];
+const screenA = {"lengthbar":44, "widthbar":33};
+const screenB = {"lengthbar":55, "widthbar":33.5};
+const screenC = {"lengthbar":22, "widthbar":15};
 
 //find the combination of material with the least amount of waste
 function findMinimumWaste(firstScreen, secondScreen, stockRequired){
     //this is the final array where I'm going to store the results of getting the best combination of bars, subtracting them from the 72 inch bar, and finding out
     // which use the most material, are kept 
     const resultArray = [];
-
-    //think of a better name later.
-    const firstScreenObj = {"lengthbar":firstScreen[0], "widthbar":firstScreen[1]};
-    const secondScreenObj = {"lengthbar":secondScreen[0], "widthbar":secondScreen[1]};
 
 
     //how much material is left after cutting it down
@@ -33,18 +29,18 @@ function findMinimumWaste(firstScreen, secondScreen, stockRequired){
     //checks which combination of bars uses the most amount of an aluminum bar
     // I set i to 2 because there are two bars
     for(let i = 0; i < 2; i++){
-        if(firstScreenObj['lengthbar'] + firstScreenObj['widthbar'] < alumbarLength){
+        if(firstScreen['lengthbar'] + firstScreen['widthbar'] < alumbarLength){
             //if it uses up 72 inches or less, aka a full bar, then push that to optimalArray, which holds the best combination of bars
-            optimalArray.push([firstScreenObj['lengthbar'], firstScreenObj['widthbar']]);
+            optimalArray.push([firstScreen['lengthbar'], firstScreen['widthbar']]);
             //add the two bars together, and then subtract that from the 72 inch bar. then push it to this array so I can check which combination of bars
             //has the smallest number left, so that I can determine which combination gets you the most of your single 72 inch bar. 
-            sumArray.push(alumbarLength - (firstScreenObj['lengthbar'] + firstScreenObj['widthbar']));
-        } else if(firstScreenObj['lengthbar'] + secondScreen['lengthbar'] < alumbarLength){
-            optimalArray.push([firstScreenObj['lengthbar'], secondScreenObj['lengthbar']]);
-            sumArray.push(alumbarLength - (firstScreenObj['lengthbar'] + secondScreenObj['lengthbar']));
+            sumArray.push(alumbarLength - (firstScreen['lengthbar'] + firstScreen['widthbar']));
+        } else if(firstScreen['lengthbar'] + secondScreen['lengthbar'] < alumbarLength){
+            optimalArray.push([firstScreen['lengthbar'], secondScreen['lengthbar']]);
+            sumArray.push(alumbarLength - (firstScreen['lengthbar'] + secondScreen['lengthbar']));
         } else if(secondScreenObj['lengthbar'] + secondScreenObj['widthbar'] < alumbarLength){
-            optimalArray.push([secondScreenObj['lengthbar'], secondScreenObj['widthbar']]);
-            sumArray.push(alumbarLength - (secondScreenObj['lengthbar'] + secondScreenObj['widthbar']));
+            optimalArray.push([secondScreen['lengthbar'], secondScreen['widthbar']]);
+            sumArray.push(alumbarLength - (secondScreen['lengthbar'] + secondScreen['widthbar']));
         } else {
             //if neither combination of bars is less than 72 inches, then it doesn't matter which order you do, because in the end,
             // you're still gonna have to use another bar. 
