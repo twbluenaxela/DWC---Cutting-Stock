@@ -26,9 +26,21 @@ function findMinimumWaste(firstScreen, secondScreen, stockRequired){
     const sumArray = [];
 
 
+    console.log("-------------------------------------------------------------")
+    const sumOfScreens = Object.keys(firstScreen).reduce(function(a, b){
+        a[b] = firstScreen[b] + secondScreen[b];
+
+        return a
+    }, {})
+    console.log("Sum of the screen values")
+    console.log(sumOfScreens)
+
+
     //checks which combination of bars uses the most amount of an aluminum bar
     // I set i to 2 because there are two bars
     for(let i = 0; i < 2; i++){
+        //creates a random ID so I can track it in the sumArray when I do calculations... hmm maybe I don't need this
+        let id = Math.random().toString(36).substring(2);
         if(firstScreen['lengthbar'] + firstScreen['widthbar'] < alumbarLength){
             //if it uses up 72 inches or less, aka a full bar, then push that to optimalArray, which holds the best combination of bars
             optimalArray.push([firstScreen['lengthbar'], firstScreen['widthbar']]);
@@ -66,7 +78,7 @@ function findMinimumWaste(firstScreen, secondScreen, stockRequired){
         if((alumbarLength - sumArray[i]) > min){
             //removes minimum until there is only one
             if(sumArray.length > 0){
-                sumArray.pop(min);
+                sumArray.splice(i, 1)
             }
             //move to final array so that I can see which ones have the greatest number after being subtracted from the 72 inch aluminum bar, 
             resultArray.push(sumArray[i]); 
